@@ -3,6 +3,7 @@
 from doctest import OutputChecker
 from textwrap import fill
 from tkinter import *
+from unicodedata import name
 from sigaa import *
 from turtle import left
 from pathlib import Path
@@ -86,16 +87,14 @@ def round_rectangle(x1, y1, x2, y2, local, radius=25, **kwargs):
 # um texto e uma caixa no canva passado como parâmetro
 def acao_botao(canva_nota, canva_faltas, frame):
     dicionario = abre_boletim()
-    round_rectangle(
-        0, 0, 528, 60, canva_faltas, radius=31, outline="#FFFFFF", fill="#242A33"
-    )
+    round_rectangle(0, 0, 528, 60, canva_faltas, radius=31, fill="#242A33")
     canva_faltas.create_image(211, 30, image=bloco)
     canva_faltas.create_text(
         60.0,
         17.0,
         anchor="nw",
         text="Faltas",
-        fill="#ffffff",
+        fill="#F2CE1B",
         font=("ZCOOLXiaoWei Regular", 20 * -1),
     )
     canva_faltas.create_text(
@@ -103,7 +102,7 @@ def acao_botao(canva_nota, canva_faltas, frame):
         21,
         anchor="nw",
         text=dicionario["faltas"],
-        fill="#ffffff",
+        fill="#F2CE1B",
         font=("ZCOOLXiaoWei Regular", 20 * -1),
     )
     dicionario.pop("faltas")
@@ -145,7 +144,7 @@ window = Tk()
 bloco = PhotoImage(file=relative_to_assets("image_2.png"))
 window.geometry("780x520")
 window.configure(bg="#2D3440")
-
+window.title("Conect_sigaa")
 
 canvas = Canvas(
     window,
