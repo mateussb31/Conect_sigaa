@@ -84,3 +84,22 @@ def abre_boletim():
     # print(navegador.find_element(By.XPATH, colunas +
     #       '[2]').text, navegador.find_element(By.XPATH, colunas + '[3]').text)
     return dicio
+
+
+def pega_atividades():
+    janela = abre_sigaa(navegador)
+    atividades = locate_with(
+        By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr/td/img'
+    ).to_left_of({By.TAG_NAME, "small"})
+    # atividades = janela.find_elements(
+    #     By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr/td/small/text()'
+    # )
+    # atividades = janela.find_elements(
+    #     By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr/td/small'
+    # )
+    # for elemento in atividades:
+    #     print(elemento.text)
+    return atividades
+
+
+print(pega_atividades())
