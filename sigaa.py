@@ -94,7 +94,7 @@ def pega_atividades():
         estado = janela.find_element(
             By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr[' + str(i) + "]/td[1]"
         ).accessible_name
-        if estado == "Atividade na Semana":
+        if estado == "":
             atividade = janela.find_element(
                 By.XPATH,
                 '//*[@id="avaliacao-portal"]/table/tbody/tr['
@@ -102,12 +102,13 @@ def pega_atividades():
                 + "]/td[3]/small",
             ).text
             materia = atividade.split("-")
-            enunciado = atividade.split(":")
+            enunciado = atividade.split(": ")
             data = janela.find_element(
                 By.XPATH,
                 '//*[@id="avaliacao-portal"]/table/tbody/tr[' + str(i) + "]/td[2]",
             ).text
             data = data.split("(")[0]
-            atividade = materia[0] + ":" + enunciado[1]
+            atividade = materia[0] + ":\n" + enunciado[1]
+
             dicio[atividade] = data
     return dicio

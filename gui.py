@@ -21,7 +21,7 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-def adequa_tamanho(s):
+def adequa_tamanho_nota(s):
     resultado = ""
     if len(s) > 22:
         s = s.split()
@@ -33,6 +33,10 @@ def adequa_tamanho(s):
         return resultado
     else:
         return s
+
+
+def adequa_tamanho_atividade(s):
+    resultado = ""
 
 
 def round_rectangle(x1, y1, x2, y2, local, radius=25, **kwargs):
@@ -109,25 +113,25 @@ def acao_botao(canva_nota, canva_faltas, frame):
 
     contador = 0
     round_rectangle(
-        0, 0, 528, len(dicionario) * 45, canva_nota, radius=31, fill="#242A33"
+        0, 0, 528, len(dicionario) * 65, canva_nota, radius=31, fill="#242A33"
     )
     for i in dicionario.keys():
-        canva_nota.create_image(211.0, 32 + 44 * contador, image=bloco)
+        # canva_nota.create_image(211.0, 32 + 44 * contador, image=bloco)
         canva_nota.create_text(
-            60.0,
-            20 + contador * 44.0,
+            20.0,
+            20 + contador * 55.0,
             anchor="nw",
             text=i,
             fill="#F2CE1B",
             font=("ZCOOLXiaoWei Regular", 20 * -1),
         )
         canva_nota.create_text(
-            430.0,
-            20 + contador * 44.0,
+            390.0,
+            20 + contador * 58.0,
             anchor="nw",
             text=dicionario[i],
             fill="#F2CE1B",
-            font=("ZCOOLXiaoWei Regular", 20 * -1),
+            font=("ZCOOLXiaoWei Regular", 17 * -1),
         )
         contador += 1
     canva_nota.pack()
