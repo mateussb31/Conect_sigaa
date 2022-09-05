@@ -86,7 +86,7 @@ def round_rectangle(x1, y1, x2, y2, local, radius=25, **kwargs):
 # Executa a função de abrir o sigaa -> para cada elemento no dicionário retornado cria
 # um texto e uma caixa no canva passado como parâmetro
 def acao_botao(canva_nota, canva_faltas, frame):
-    dicionario = abre_boletim()
+    dicionario = pega_atividades()
     round_rectangle(0, 0, 528, 60, canva_faltas, radius=31, fill="#242A33")
     canva_faltas.create_image(211, 30, image=bloco)
     canva_faltas.create_text(
@@ -97,15 +97,15 @@ def acao_botao(canva_nota, canva_faltas, frame):
         fill="#F2CE1B",
         font=("ZCOOLXiaoWei Regular", 20 * -1),
     )
-    canva_faltas.create_text(
-        430,
-        21,
-        anchor="nw",
-        text=dicionario["faltas"],
-        fill="#F2CE1B",
-        font=("ZCOOLXiaoWei Regular", 20 * -1),
-    )
-    dicionario.pop("faltas")
+    # canva_faltas.create_text(
+    #     430,
+    #     21,
+    #     anchor="nw",
+    #     text=dicionario["faltas"],
+    #     fill="#F2CE1B",
+    #     font=("ZCOOLXiaoWei Regular", 20 * -1),
+    # )
+    # dicionario.pop("faltas")
 
     contador = 0
     round_rectangle(
@@ -117,7 +117,7 @@ def acao_botao(canva_nota, canva_faltas, frame):
             60.0,
             20 + contador * 44.0,
             anchor="nw",
-            text=adequa_tamanho(i),
+            text=i,
             fill="#F2CE1B",
             font=("ZCOOLXiaoWei Regular", 20 * -1),
         )

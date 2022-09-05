@@ -88,18 +88,26 @@ def abre_boletim():
 
 def pega_atividades():
     janela = abre_sigaa(navegador)
-    atividades = locate_with(
-        By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr/td/img'
-    ).to_left_of({By.TAG_NAME, "small"})
-    # atividades = janela.find_elements(
-    #     By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr/td/small/text()'
-    # )
-    # atividades = janela.find_elements(
-    #     By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr/td/small'
-    # )
-    # for elemento in atividades:
-    #     print(elemento.text)
-    return atividades
-
-
-print(pega_atividades())
+    itens = janela.find_elements(By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr')
+    dicio = {}
+    for i in range(1, len(itens) + 1):
+        estado = janela.find_element(
+            By.XPATH, '//*[@id="avaliacao-portal"]/table/tbody/tr[' + str(i) + "]/td[1]"
+        ).accessible_name
+        if estado == "Atividade na Semana":
+            atividade = janela.find_element(
+                By.XPATH,
+                '//*[@id="avaliacao-portal"]/table/tbody/tr['
+                + str(i)
+                + "]/td[3]/small",
+            ).text
+            materia = atividade.split("-")
+            enunciado = atividade.split(":")
+            data = janela.find_element(
+                By.XPATH,
+                '//*[@id="avaliacao-portal"]/table/tbody/tr[' + str(i) + "]/td[2]",
+            ).text
+            data = data.split("(")[0]
+            atividade = materia[0] + ":" + enunciado[1]
+            dicio[atividade] = data
+    return dicio
