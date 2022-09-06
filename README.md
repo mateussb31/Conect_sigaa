@@ -9,5 +9,5 @@ Ultima alteração:
 Próximo passo:
 - Configuração da barra de rolagem para o scroll do mouse
 <br>
-<img src="img.png" alt="imagem ilustrativa" style="height: 400px; width:500px;"/>
+<img src="img1.png" alt="imagem ilustrativa" style="height: 400px; width:500px;"/>
 
