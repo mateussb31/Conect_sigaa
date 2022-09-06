@@ -5,7 +5,7 @@ from textwrap import fill
 from tkinter import *
 from unicodedata import name
 from sigaa import *
-from turtle import left
+from turtle import bgcolor, left
 from pathlib import Path
 from tkinter import BOTTOM, LEFT, RIGHT, Frame, Tk, Canvas, Text, Button, PhotoImage
 
@@ -89,137 +89,151 @@ def round_rectangle(x1, y1, x2, y2, local, radius=25, **kwargs):
 
 # Executa a função de abrir o sigaa -> para cada elemento no dicionário retornado cria
 # um texto e uma caixa no canva passado como parâmetro
-def acao_botao(canva_nota, canva_faltas, frame):
-    dicionario = pega_atividades()
-    round_rectangle(0, 0, 528, 60, canva_faltas, radius=31, fill="#242A33")
-    canva_faltas.create_image(211, 30, image=bloco)
-    canva_faltas.create_text(
-        60.0,
-        17.0,
-        anchor="nw",
-        text="Faltas",
-        fill="#F2CE1B",
-        font=("ZCOOLXiaoWei Regular", 20 * -1),
-    )
-    # canva_faltas.create_text(
-    #     430,
-    #     21,
-    #     anchor="nw",
-    #     text=dicionario["faltas"],
-    #     fill="#F2CE1B",
-    #     font=("ZCOOLXiaoWei Regular", 20 * -1),
-    # )
-    # dicionario.pop("faltas")
+def acao_botao(canva_atividades, canva_notas, frame):
+    lista_atividades = pega_atividades()
+    lista_notas = abre_boletim()
 
     contador = 0
-    round_rectangle(
-        0, 0, 528, len(dicionario) * 65, canva_nota, radius=31, fill="#242A33"
-    )
-    for i in dicionario.keys():
-        # canva_nota.create_image(211.0, 32 + 44 * contador, image=bloco)
-        canva_nota.create_text(
-            20.0,
-            20 + contador * 55.0,
+    for i in lista_notas.keys():
+        canva_notas.create_text(
+            5,
+            10 + contador * 25,
             anchor="nw",
-            text=i,
-            fill="#F2CE1B",
-            font=("ZCOOLXiaoWei Regular", 20 * -1),
+            text=adequa_tamanho_nota(i),
+            fill="#F2F2F2",
+            font=("Montserrat", 13 * -1),
         )
-        canva_nota.create_text(
-            390.0,
-            20 + contador * 58.0,
+        canva_notas.create_text(
+            170,
+            10 + contador * 25,
             anchor="nw",
-            text=dicionario[i],
-            fill="#F2CE1B",
-            font=("ZCOOLXiaoWei Regular", 17 * -1),
+            text=lista_notas[i],
+            fill="#F2F2F2",
+            font=("Montserrat", 13 * -1),
         )
         contador += 1
-    canva_nota.pack()
+    contador = 0
+    for i in lista_atividades.keys():
+        round_rectangle(
+            0,
+            contador * 70,
+            550,
+            contador * 70 + 65,
+            canva_atividades,
+            radius=31,
+            fill="#1A1A1A",
+        )
+        # round_rectangle(
+        #     0, contador * 60, 550, 65, canva_atividades, radius=31, fill="#1A1A1A"
+        # )
+        # canva_atividades.create_image(211.0, 32 + 44 * contador, image=bloco)
+        canva_atividades.create_text(
+            11.0,
+            4 + contador * 70.0,
+            anchor="nw",
+            text=i,
+            fill="#F2F2F2",
+            font=("Montserrat", 20 * -1),
+        )
+        canva_atividades.create_text(
+            410.0,
+            20 + contador * 70.0,
+            anchor="nw",
+            text=lista_atividades[i],
+            fill="#F2F2F2",
+            font=("Montserrat", 15 * -1),
+        )
+        contador += 1
+    canva_atividades.pack()
     if contador > 5:
         vbar = Scrollbar(frame, orient=VERTICAL)
         vbar.pack(side=RIGHT, fill=Y)
-        vbar.config(command=canva_nota.yview)
-        canva_nota.config(yscrollcommand=vbar.set)
-        canva_nota.pack(side=LEFT, expand=True, fill=BOTH)
-        canva_nota.config(scrollregion=(-1, -1, 529, contador * 45))
+        vbar.config(command=canva_atividades.yview)
+        canva_atividades.config(yscrollcommand=vbar.set)
+        canva_atividades.pack(side=LEFT, expand=True, fill=BOTH)
+        canva_atividades.config(scrollregion=(-1, -1, 529, contador * 45))
 
 
 window = Tk()
 bloco = PhotoImage(file=relative_to_assets("image_2.png"))
 window.geometry("780x520")
-window.configure(bg="#2D3440")
+window.configure(bg="#1e1e1e")
 window.title("Conect_sigaa")
 
 canvas = Canvas(
     window,
-    bg="#2D3440",
+    bg="#1e1e1e",
     height=520,
     width=780,
     bd=0,
     highlightthickness=0,
     relief="ridge",
 )
+Canvas_atividades = Canvas()
 Canvas_notas = Canvas()
-Canvas_faltas = Canvas()
-my_rectangle = round_rectangle
+
 central = Frame()
+direita = Frame()
 canvas.place(x=0, y=0)
-button_image_1 = PhotoImage(file=relative_to_assets("button_1.png"))
+
 button_1 = Button(
-    image=button_image_1,
+    text="Conectar",
+    bg="#1a1a1a",
+    fg="#8E5AEE",
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: acao_botao(Canvas_notas, Canvas_faltas, central),
+    command=lambda: acao_botao(Canvas_atividades, Canvas_notas, central),
     relief="flat",
+    font=("Montserrat", 18 * -1),
 )
-button_1.place(x=4.0, y=479.0, width=110.0, height=30.0)
+button_1.place(x=688.0, y=486.0, width=87, height=25)
 
-central = Frame(window, width=528, height=500, background="#2D3440")
-central.place(x=16, y=110)
+central = Frame(window, width=550, height=500, background="#1e1e1e")
+central.place(x=9, y=84)
+
+direita = Frame(window, width=210, height=375, background="#1a1a1a")
+direita.place(x=570, y=110)
+
+Canvas_atividades = Canvas(
+    central,
+    bg="#1e1e1e",
+    width=550,
+    height=420,
+    bd=0,
+    highlightthickness=0,
+    relief="ridge",
+)
+Canvas_atividades.pack(pady=(0, 10))
 
 Canvas_notas = Canvas(
-    central,
-    bg="#2D3440",
-    width=528,
-    height=290,
-    bd=0,
+    direita,
+    bg="#1a1a1a",
+    width=210,
+    height=375,
     highlightthickness=0,
     relief="ridge",
 )
+Canvas_notas.pack()
 
-Canvas_faltas = Canvas(
-    central,
-    bg="#2D3440",
-    width=528,
-    height=60,
-    bd=0,
-    highlightthickness=0,
-    relief="ridge",
-)
-# Canvas_faltas.place(y=1500)
-Canvas_faltas.pack(side=BOTTOM, fill=X)
-Canvas_notas.pack(pady=(0, 10))
-
-
-canvas.create_rectangle(568.0, 0.0, 780.0, 520.0, fill="#242A33", outline="")
+canvas.create_rectangle(568.0, 0.0, 780.0, 520.0, fill="#1A1A1A", outline="")
 
 
 canvas.create_text(
-    80.0,
-    20.0,
-    anchor="nw",
-    text="Notas",
-    fill="#F2CE1B",
-    font=("ZCOOLXiaoWei Regular", 64 * -1),
-)
-
-canvas.create_text(
-    597.0,
-    19.0,
+    25.0,
+    25.0,
     anchor="nw",
     text="Atividades",
-    fill="#FFFFFF",
-    font=("ZCOOLXiaoWei Regular", 32 * -1),
+    fill="#8E5AEE",
+    font=("Montserrat", 40 * -1),
+)
+
+canvas.create_text(
+    628.0,
+    64.0,
+    anchor="nw",
+    text="Notas",
+    fill="#919191",
+    font=("Montserrat", 32 * -1),
 )
 
 
