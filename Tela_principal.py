@@ -6,7 +6,7 @@ from doctest import OutputChecker
 from textwrap import fill
 from tkinter import *
 from unicodedata import name
-from sigaa import *
+from Sigaa import *
 from turtle import bgcolor, left
 from pathlib import Path
 from tkinter import BOTTOM, LEFT, RIGHT, Frame, Tk, Canvas, Text, Button, PhotoImage
@@ -91,9 +91,14 @@ def round_rectangle(x1, y1, x2, y2, local, radius=25, **kwargs):
 
 # Executa a função de abrir o sigaa -> para cada elemento no dicionário retornado cria
 # um texto e uma caixa no canva passado como parâmetro
-def acao_botao(canva_atividades, canva_notas, frame):
-    lista_atividades = pega_atividades()
-    lista_notas = abre_boletim()
+def acao_botao(
+    canva_atividades, canva_notas, frame, entry1: Entry, entry2: Entry, janela: Toplevel
+):
+
+    print(entry1.get(), entry2.get())
+    nav = Sigaa(entry1.get(), entry2.get())
+    lista_atividades = nav.pega_atividades()
+    lista_notas = nav.abre_boletim()
 
     contador = 0
     for i in lista_notas.keys():
@@ -154,6 +159,7 @@ def acao_botao(canva_atividades, canva_notas, frame):
         canva_atividades.config(yscrollcommand=vbar.set)
         canva_atividades.pack(side=LEFT, expand=True, fill=BOTH)
         canva_atividades.config(scrollregion=(-1, -1, 529, contador * 45))
+    janela.destroy()
 
 
 window = Tk()
@@ -233,9 +239,10 @@ senha = Entry(
     width=224,
     highlightthickness=0,
     borderwidth=0,
+    show="*",
 )
 senha.insert(0, "Senha")
-senha.place(x=5, y=65)
+senha.place(x=5, y=67)
 
 
 canvas = Canvas(
@@ -261,7 +268,9 @@ button_1 = Button(
     fg="#f2f2f2",
     borderwidth=0,
     highlightthickness=0,
-    command=lambda: acao_botao(Canvas_atividades, Canvas_notas, central),
+    command=lambda: acao_botao(
+        Canvas_atividades, Canvas_notas, central, usuario, senha, window2
+    ),
     relief="flat",
     font=("Inter", 18 * -1),
 )
