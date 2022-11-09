@@ -5,6 +5,8 @@ from typing_extensions import Self
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 class Sigaa:
@@ -13,7 +15,9 @@ class Sigaa:
         self.senha = senha
         options = webdriver.ChromeOptions()
         options.add_argument("--headless")
-        self.navegador = webdriver.Chrome(chrome_options=options)
+        self.navegador = webdriver.Chrome(
+            ChromeDriverManager().install(), chrome_options=options
+        )
         self.navegador.get("https://sig.cefetmg.br/sigaa/verTelaLogin.do")
         try:
             self.navegador.find_element(
@@ -103,7 +107,7 @@ class Sigaa:
                 By.XPATH,
                 '//*[@id="avaliacao-portal"]/table/tbody/tr[' + str(i) + "]/td[1]",
             ).accessible_name
-            if estado == "":
+            if estado == "Atividade na Semana":
                 atividade = self.navegador.find_element(
                     By.XPATH,
                     '//*[@id="avaliacao-portal"]/table/tbody/tr['
@@ -123,5 +127,5 @@ class Sigaa:
         return dicio
 
 
-# nav = Sigaa("12610740689", "310505Mateus")
-# print(nav.pega_atividades(), nav.abre_boletim())
+nav = Sigaa("12610740689", "310505Mateus")
+print(nav.pega_atividades(), nav.abre_boletim())
