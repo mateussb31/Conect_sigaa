@@ -125,7 +125,3 @@ class Sigaa:
 
                 dicio[atividade] = data
         return dicio
-
-
-nav = Sigaa("12610740689", "310505Mateus")
-print(nav.pega_atividades(), nav.abre_boletim())
