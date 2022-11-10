@@ -5,6 +5,7 @@ from ctypes import alignment
 from doctest import OutputChecker
 from textwrap import fill
 from tkinter import *
+from tkinter import ttk
 from unicodedata import name
 from Sigaa import *
 from turtle import bgcolor, left
@@ -343,9 +344,10 @@ canvas.create_text(
 )
 
 barra = Scrollbar(direita)
-barra.place(x=192, y=0, height=370)
+barra.place(x=201, y=0, height=370, width=7)
 barra.config(command=Canvas_notas.yview)
-
+barra.config(troughcolor="#1E1E1E",border=0,activebackground="#8E5AEE", bg="#1E1E1E")
+Canvas_notas.configure(yscrollcommand=barra.set)
 
 window.resizable(False, False)
 window.mainloop()

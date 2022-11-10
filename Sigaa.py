@@ -66,9 +66,10 @@ class Sigaa:
         ActionChains(self.navegador).move_to_element(ensino).click(
             emitir_boletim
         ).perform()
-        self.navegador.find_elements(
-            By.XPATH, '//*[@id="form"]/table/tbody/tr[3]/td[3]'
-        ).click()
+        self.anos = self.navegador.find_elements(
+            By.XPATH, '//*[@id="form"]/table/tbody/tr'
+        )
+        self.navegador.find_element(By.XPATH, '//*[@id="form"]/table/tbody/tr['+str(len(self.anos))+']/td[3]').click()
         linhas_tabela = len(
             self.navegador.find_elements(
                 By.XPATH, '//*[@id="relatorio"]/table[3]/tbody/tr'
@@ -125,3 +126,4 @@ class Sigaa:
 
                 dicio[atividade] = data
         return dicio
+
