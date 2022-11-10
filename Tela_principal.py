@@ -236,7 +236,7 @@ usuario = Entry(
     highlightthickness=0,
     borderwidth=0,
 )
-usuario.insert(0, "12610740689")
+usuario.insert(0, "Usuário")
 usuario.place(x=5, y=35)
 
 senha = Entry(
@@ -249,7 +249,7 @@ senha = Entry(
     borderwidth=0,
     show="*",
 )
-senha.insert(0, "310505Mateus")
+senha.insert(0, "Senha")
 senha.place(x=5, y=67)
 
 
@@ -343,7 +343,7 @@ canvas.create_text(
 )
 
 barra = Scrollbar(direita)
-barra.place(x=192, y=30)
+barra.place(x=192, y=0, height=370)
 barra.config(command=Canvas_notas.yview)
 
 
