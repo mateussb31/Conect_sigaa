@@ -159,7 +159,15 @@ def acao_botao(
         canva_atividades.config(yscrollcommand=vbar.set)
         canva_atividades.pack(side=LEFT, expand=True, fill=BOTH)
         canva_atividades.config(scrollregion=(-1, -1, 529, contador * 45))
+    canva_notas.configure(scrollregion=Canvas_notas.bbox("all"))
     janela.destroy()
+
+
+def print_widget_under_mouse(window):
+    x, y = window.winfo_pointerxy()
+    widget = window.winfo_containing(x, y)
+    print("widget:", widget)
+    window.after(1000, print_widget_under_mouse, window)
 
 
 window = Tk()
@@ -228,7 +236,7 @@ usuario = Entry(
     highlightthickness=0,
     borderwidth=0,
 )
-usuario.insert(0, "Usuário")
+usuario.insert(0, "12610740689")
 usuario.place(x=5, y=35)
 
 senha = Entry(
@@ -241,7 +249,7 @@ senha = Entry(
     borderwidth=0,
     show="*",
 )
-senha.insert(0, "Senha")
+senha.insert(0, "310505Mateus")
 senha.place(x=5, y=67)
 
 
@@ -279,7 +287,7 @@ button_1.place(x=124, y=301, width=52, height=22)
 central = Frame(window, width=550, height=500, background="#1e1e1e")
 central.place(x=9, y=84)
 
-direita = Frame(window, width=210, height=375, background="#1a1a1a")
+direita = Frame(window, width=210, height=375, background="#1a1a1a", name="direita")
 direita.place(x=570, y=110)
 
 Canvas_atividades = Canvas(
@@ -300,6 +308,7 @@ Canvas_notas = Canvas(
     height=375,
     highlightthickness=0,
     relief="ridge",
+    name="notas",
 )
 Canvas_notas.pack()
 
@@ -332,6 +341,10 @@ canvas.create_text(
     fill="#919191",
     font=("Montserrat", 32 * -1),
 )
+
+barra = Scrollbar(direita)
+barra.place(x=192, y=30)
+barra.config(command=Canvas_notas.yview)
 
 
 window.resizable(False, False)
